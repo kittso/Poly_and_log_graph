@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Math</title>
+    <style>
+        :root {
+            --primary-pink: #ffb7b2;
+            --pastel-purple: #e8dbfc;
+            --accent-blue: #b5ead7;
+            --dark-pink: #ff8b94;
+            --text-dark: #4a4a4a;
+            --card-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffebf0 50%, #f0e6ff 100%);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: #d15b73;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+
+        header p {
+            color: #8c7b99;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 0;
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            background: white;
+            color: #d15b73;
+            box-shadow: 0 4px 15px rgba(209, 91, 115, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #ff8b94, #ffb7b2);
+            color: white;
+            box-shadow: 0 6px 20px rgba(209, 91, 115, 0.3);
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            max-width: 950px;
+            width: 100%;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            display: none;
+        }
+
+        .dashboard-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .visual-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .visual-layout { grid-template-columns: 1fr; }
+        }
+
+        .control-panel {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--pastel-purple);
+        }
+
+        .graph-panel {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .concept-note {
+            background: #fff0f2;
+            border-left: 4px solid var(--dark-pink);
+            padding: 12px 15px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #614e6e;
+        }
+
+        .slider-group {
+            margin-bottom: 20px;
+        }
+
+        input[type=range] {
+            width: 100%;
+            margin: 10px 0;
+            accent-color: var(--dark-pink);
+        }
+
+        .math-badge {
+            background: linear-gradient(45deg, #e8dbfc, #ffe5ec);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-style: italic;
+            font-weight: bold;
+            color: #5d4478;
+            display: inline-block;
+        }
+
+        .action-btn {
+            background: linear-gradient(45deg, #ff8b94, #ffb7b2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 139, 148, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌸 Math</h1>
+        <p>DSE Mathematics</p>
+    </header>
+
+    <div class="tab-container">
+        <button class="tab-btn active" onclick="switchTab('poly')">Polynomial Theorem</button>
+        <button class="tab-btn" onclick="switchTab('graphs')">Log & Expo Grapher</button>
+    </div>
+
+    <div id="poly-tab" class="dashboard-card active">
+        <div class="visual-layout">
+            <div class="control-panel">
+                <h2>✨ Remainder Theorem Magic</h2>
+                <div class="concept-note">
+                    <b>Concept:</b> 當 <i>f(x)</i> 除以 <i>(x - c)</i> 時，餘數（Remainder）其實就等如直接將 <i>c</i> 代入函數所得出嘅高低位置 <b><i>f(c)</i></b>！睇吓右邊幅圖，當你移動 <i>c</i> 嘅時候，粉紅色點點代表嘅就係餘數！
+                </div>
+                
+                <div class="slider-group">
+                    <label>1. Adjust Constant <span style="color:#d15b73; font-size:18px; font-style:italic;">c</span> (Divisor is x - c):</label>
+                    <input type="range" id="poly-c" min="-3" max="3" step="0.1" value="1">
+                    <div>Current Divisor: <span class="math-badge" id="divisor-text">x - 1.0</span></div>
+                </div>
+
+                <div class="slider-group">
+                    <p>When <span class="math-badge">x = c</span> is plugged into <span class="math-badge" style="background:#b5ead7;">f(x) = 0.5x³ - x² - x + 2</span>:</p>
+                    <div style="font-size: 18px; font-weight: bold; color: #d15b73;">
+                        🌸 Remainder = f(c) = <span id="remainder-value">0.5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="graph-panel">
+                <svg id="poly-svg" width="400" height="400" style="border: 1px solid #f0e6ff;"></svg>
+            </div>
+        </div>
+    </div>
+
+    <div id="graphs-tab" class="dashboard-card">
+        <div class="visual-layout">
+            <div class="control-panel">
+                <h2>🔮 Log & Expo Twin Dance</h2>
+                <div class="concept-note">
+                    <b>DSE 必背：</b> Exponential <b><i>aˣ</i></b> 同 Logarithmic <b>logₐ <i>x</i></b> 係<b>反函數（Inverse Functions）</b>，佢哋嘅條線會永遠對稱於一條隱形鏡子線 <b><i>y = x</i></b>！<br><br>
+                    ✨ 當底數 <b><i>a &gt; 1</i></b>，兩條線都會向上衝（Growth）；當 <b><i>0 &lt; a &lt; 1</i></b>，兩條線就會向下滑（Decay）。
+                </div>
+
+                <div class="slider-group">
+                    <label>Select Base (底數 <i>a</i>):</label>
+                    <input type="range" id="graph-a" min="0.2" max="3.5" step="0.1" value="2">
+                    <div>Current Base <i>a</i> = <span class="math-badge" id="base-text">2.0</span></div>
+                    <div id="base-status" style="margin-top:5px; font-weight:bold; color:#7a5299;"></div>
+                </div>
+
+                <div style="margin-top: 15px; line-height: 1.8;">
+                    <span style="color:#ff8b94; font-weight:bold;">■ Exponential Line (aˣ)</span><br>
+                    <span style="color:#4895ef; font-weight:bold;">■ Logarithmic Line (logₐ x)</span><br>
+                    <span style="color:#aaa; font-style:italic;">--- Mirror Line (y = x)</span>
+                </div>
+            </div>
+
+            <div class="graph-panel">
+                <svg id="logexpo-svg" width="400" height="400" style="border: 1px solid #f0e6ff;"></svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.dashboard-card').forEach(c => c.classList.remove('active'));
+            
+            if(tab === 'poly') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('poly-tab').classList.add('active');
+                drawPolyGraph();
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('graphs-tab').classList.add('active');
+                drawLogExpoGraph();
+            }
+        }
+
+        const polyCInput = document.getElementById('poly-c');
+        polyCInput.addEventListener('input', drawPolyGraph);
+
+        function drawPolyGraph() {
+            const svg = document.getElementById('poly-svg');
+            const c = parseFloat(polyCInput.value);
+            
+            document.getElementById('divisor-text').innerText = c >= 0 ? `x - ${c.toFixed(1)}` : `x + ${Math.abs(c).toFixed(1)}`;
+            
+            const f = (x) => 0.5 * Math.pow(x, 3) - Math.pow(x, 2) - x + 2;
+            const rem = f(c);
+            document.getElementById('remainder-value').innerText = rem.toFixed(3);
+
+            const mapX = (x) => 200 + x * 45;
+            const mapY = (y) => 200 - y * 45;
+
+            let html = `
+                <line x1="0" y1="200" x2="400" y2="200" stroke="#ddd" stroke-width="2"/>
+                <line x1="200" y1="0" x2="200" y2="400" stroke="#ddd" stroke-width="2"/>
+                <text x="385" y="195" fill="#aaa">X</text>
+                <text x="205" y="15" fill="#aaa">Y</text>
+            `;
+
+            let pathD = "";
+            for (let px = -3.5; px <= 3.5; px += 0.1) {
+                let py = f(px);
+                let sx = mapX(px);
+                let sy = mapY(py);
+                if (sy >= 0 && sy <= 400) {
+                    pathD += (pathD === "" ? "M " : " L ") + `${sx} ${sy}`;
+                }
+            }
+            html += `<path d="${pathD}" fill="none" stroke="#b5ead7" stroke-width="4" />`;
+            html += `<line x1="${mapX(c)}" y1="400" x2="${mapX(c)}" y2="0" stroke="#e8dbfc" stroke-width="2" stroke-dasharray="4"/>`;
+            html += `<circle cx="${mapX(c)}" cy="${mapY(rem)}" r="8" fill="#ff8b94" stroke="white" stroke-width="2"/>`;
+            html += `<text x="${mapX(c)+12}" y="${mapY(rem)+5}" fill="#ff8b94" font-weight="bold">f(${c.toFixed(1)}) = ${rem.toFixed(1)}</text>`;
+
+            svg.innerHTML = html;
+        }
+
+        const graphAInput = document.getElementById('graph-a');
+        graphAInput.addEventListener('input', drawLogExpoGraph);
+
+        function drawLogExpoGraph() {
+            const svg = document.getElementById('logexpo-svg');
+            let a = parseFloat(graphAInput.value);
+            if (Math.abs(a - 1.0) < 0.15) a = a > 1 ? 1.15 : 0.85;
+
+            document.getElementById('base-text').innerText = a.toFixed(2);
+            const statusBox = document.getElementById('base-status');
+            if(a > 1) {
+                statusBox.innerText = "📈 Base a > 1: Graph is CLIMBING!";
+                statusBox.style.color = "#ff8b94";
+            } else {
+                statusBox.innerText = "📉 Base 0 < a < 1: Graph is FALLING!";
+                statusBox.style.color = "#4895ef";
+            }
+
+            const mapX = (x) => 200 + x * 40;
+            const mapY = (y) => 200 - y * 40;
+
+            let html = `
+                <line x1="0" y1="200" x2="400" y2="200" stroke="#eee" stroke-width="2"/>
+                <line x1="200" y1="0" x2="200" y2="400" stroke="#eee" stroke-width="2"/>
+                <line x1="0" y1="400" x2="400" y2="0" stroke="#ccc" stroke-width="1.5" stroke-dasharray="5"/>
+            `;
+
+            let expoPath = "";
+            for (let x = -5; x <= 5; x += 0.1) {
+                let y = Math.pow(a, x);
+                let sx = mapX(x);
+                let sy = mapY(y);
+                if(sy >= 0 && sy <= 400) {
+                    expoPath += (expoPath === "" ? "M " : " L ") + `${sx} ${sy}`;
+                }
+            }
+            html += `<path d="${expoPath}" fill="none" stroke="#ff8b94" stroke-width="3" />`;
+
+            let logPath = "";
+            for (let y = -5; y <= 5; y += 0.1) {
+                let x = Math.pow(a, y);
+                let sx = mapX(x);
+                let sy = mapY(y);
+                if(sx >= 0 && sx <= 400) {
+                    logPath += (logPath === "" ? "M " : " L ") + `${sx} ${sy}`;
+                }
+            }
+            html += `<path d="${logPath}" fill="none" stroke="#4895ef" stroke-width="3" />`;
+            html += `<circle cx="${mapX(0)}" cy="${mapY(1)}" r="4" fill="#ff8b94"/>`;
+            html += `<circle cx="${mapX(1)}" cy="${mapY(0)}" r="4" fill="#4895ef"/>`;
+
+            svg.innerHTML = html;
+        }
+
+        window.onload = function() {
+            drawPolyGraph();
+        }
+    </script>
+</body>
+</html>
